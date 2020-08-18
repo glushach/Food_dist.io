@@ -63,7 +63,9 @@ window.addEventListener('DOMContentLoaded', () => {
   function getZero(num) {
     if (num >= 0 && num < 10) {
       return `0${num}`;
-    } else {
+    } else if (num < 0) {
+      return '00';
+    }else {
       return num;
     }
   }
@@ -185,6 +187,17 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  const getResource = async (url, data) => {
+    const res = await fetch(url, {
+      method: "POST",
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: data
+    });
+    return await res.json();
+  };
+
   new MenuCard(
     "img/tabs/vegy.jpg",
     "vegy",
@@ -228,10 +241,21 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   forms.forEach(item => {
-    postData(item);
+    bindPostData(item);
   });
 
-  function postData(form) {
+  const postData = async (url, data) => {
+    const res = await fetch(url, {
+      method: "POST",
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: data
+    });
+    return await res.json();
+  };
+
+  function bindPostData(form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
@@ -253,21 +277,29 @@ window.addEventListener('DOMContentLoaded', () => {
 
       const formData = new FormData(form);
  
-      const object = {};
-      formData.forEach(function(value, key) {
-        object[key] = value;
-      });
+      // const object = {};
+      // formData.forEach(function(value, key) {
+      //   object[key] = value;
+      // });
+      const json = JSON.stringify(Object.fromEntries(formData.entries()));
+
+      // const object = {a: 23, b: 50};
+      // console.log(Object.entries(object));
 
       // const json = JSON.stringify(object);
 
       // request.send(json);
-      fetch('php/server1.php', {
-        method: "POST",
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(object)
-      }).then(data => data.text())
+      // fetch('php/server.php', {
+      //   method: "POST",
+      //   headers: {
+      //     'Content-type': 'application/json'
+      //   },
+      //   body: JSON.stringify(object)
+      // })
+      postData('http://localhost:3000/requests', json)
+      // .then(data => {
+      //   return data.text();
+      // })
       .then(data => {
         console.log(data);
         showThanksModal(message.success);
@@ -338,6 +370,10 @@ window.addEventListener('DOMContentLoaded', () => {
 // .then(response => response.json())
 // .then(json => console.log(json));
 
-//10:20
+
+//БД json-server
+// fetch('http://localhost:3000/menu')
+// .then(data => data.json())
+// .then(res => console.log(res));
 
 });
