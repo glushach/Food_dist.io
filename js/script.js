@@ -187,47 +187,73 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  const getResource = async (url, data) => {
-    const res = await fetch(url, {
-      method: "POST",
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: data
-    });
+  const getResource = async (url) => {
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+    }
     return await res.json();
   };
 
-  new MenuCard(
-    "img/tabs/vegy.jpg",
-    "vegy",
-    'Меню "Фитнес"',
-    'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
-    9,
-    '.menu .container',
-    // 'menu__item',
-    // 'big'
-  ).render();
+  getResource('http://localhost:3000/menu')
+  .then(data => {
+    data.forEach(({img, altimg, title, descr, price}) => {
+      new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+    });
+  });
+  //ЭТО ВТОРОЙ ВАРИАНТ, ВМЕСТО КЛАССОВ
+  // getResource('http://localhost:3000/menu')
+  //   .then(data => createCard(data));
+  
+  // function createCard(data) {
+  //   data.forEach(({img, altimg, title, descr, price}) => {
+  //     const element = document.createElement('div');
+  //     price = price * 27;
+  //     element.classList.add('menu__item');
+  //     element.innerHTML = `
+  //       <img src=${img} alt=${altimg}>
+  //       <h3 class="menu__item-subtitle">${title}</h3>
+  //       <div class="menu__item-descr">${descr}</div>
+  //       <div class="menu__item-divider"></div>
+  //       <div class="menu__item-price">
+  //           <div class="menu__item-cost">Цена:</div>
+  //           <div class="menu__item-total"><span>${price}</span> грн/день</div>
+  //       </div>
+  //     `;
+  //     document.querySelector('.menu .container').append(element);
+  //   });
+  // }
 
-  new MenuCard(
-    "img/tabs/elite.jpg",
-    "elite",
-    'Меню “Премиум”',
-    'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-    14,
-    '.menu .container',
-    'menu__item'
-  ).render();
+  // new MenuCard(
+  //   "img/tabs/vegy.jpg",
+  //   "vegy",
+  //   'Меню "Фитнес"',
+  //   'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+  //   9,
+  //   '.menu .container',
+  //   // 'menu__item',
+  //   // 'big'
+  // ).render();
 
-  new MenuCard(
-    "img/tabs/post.jpg",
-    "post",
-    'Меню "Постное"',
-    'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
-    21,
-    '.menu .container',
-    'menu__item'
-  ).render();
+  // new MenuCard(
+  //   "img/tabs/elite.jpg",
+  //   "elite",
+  //   'Меню “Премиум”',
+  //   'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+  //   14,
+  //   '.menu .container',
+  //   'menu__item'
+  // ).render();
+
+  // new MenuCard(
+  //   "img/tabs/post.jpg",
+  //   "post",
+  //   'Меню "Постное"',
+  //   'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
+  //   21,
+  //   '.menu .container',
+  //   'menu__item'
+  // ).render();
   
   
   // Forms
@@ -301,15 +327,23 @@ window.addEventListener('DOMContentLoaded', () => {
       //   return data.text();
       // })
       .then(data => {
-        console.log(data);
-        showThanksModal(message.success);
-        statusMessage.remove(); //удаляем спиннэр
-      }).catch(() => {
-        showThanksModal(message.failure);
+          console.log(data);
+          showThanksModal(message.success);
+          statusMessage.remove(); //удаляем спиннэр
+      })
+      .catch(() => {
+        throw showThanksModal(message.failure);
       }).finally(() => {
         form.reset();
       });
 
+      // const getResource = async (url) => {
+      //   const res = await fetch(url);
+      //   if (!res.ok) {
+      //     throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+      //   }
+      //   return await res.json();
+      // };
 
       // request.addEventListener('load', () => {
       //   if(request.status === 200) {
@@ -338,7 +372,7 @@ window.addEventListener('DOMContentLoaded', () => {
     thanksModal.classList.add('modal__dialog');
     thanksModal.innerHTML = `
       <div class="modal__content">
-        <div class="modal__close data-close">×</div>
+        <div class="modal__close" data-close>×</div>
         <div class="modal__title">${message}</div>
       </div>
     `;
