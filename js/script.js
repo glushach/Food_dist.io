@@ -270,16 +270,7 @@ window.addEventListener('DOMContentLoaded', () => {
     bindPostData(item);
   });
 
-  const postData = async (url, data) => {
-    const res = await fetch(url, {
-      method: "POST",
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: data
-    });
-    return await res.json();
-  };
+
 
   function bindPostData(form) {
     form.addEventListener('submit', (e) => {
@@ -322,20 +313,37 @@ window.addEventListener('DOMContentLoaded', () => {
       //   },
       //   body: JSON.stringify(object)
       // })
-      postData('http://localhost:3000/requests', json)
-      // .then(data => {
-      //   return data.text();
-      // })
-      .then(data => {
-          console.log(data);
+
+      const postData = async (url, data) => {
+        const res = await fetch(url, {
+          method: "POST",
+            headers: {
+              'Content-type': 'application/json'
+            },
+            body: data
+        });
+        
+        if (res.ok) {
           showThanksModal(message.success);
+          return await res.json();
+        } else {
+          showThanksModal(message.failure);
+        }
+      };
+
+      postData('http://localhost:3000/requests', json)
+      .then((data) => {
+          console.log(data);
           statusMessage.remove(); //удаляем спиннэр
       })
       .catch(() => {
-        throw showThanksModal(message.failure);
-      }).finally(() => {
+        showThanksModal(message.failure);
+      })
+      .finally(() => {
         form.reset();
-      });
+    });
+
+
 
       // const getResource = async (url) => {
       //   const res = await fetch(url);
@@ -411,3 +419,4 @@ window.addEventListener('DOMContentLoaded', () => {
 // .then(res => console.log(res));
 
 });
+
