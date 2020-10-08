@@ -1,7 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
 
   //Tabs
-
   const tabs = document.querySelectorAll('.tabheader__item'),
         tabsContent = document.querySelectorAll('.tabcontent'),
         tabParent = document.querySelector('.tabheader__items');
@@ -40,8 +39,8 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  //Timer
 
+  //Timer
   const deadline = '2020-08-11';
 
   function getTimeRemaining(endtime) {
@@ -96,11 +95,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
   setClock('.timer', deadline);
 
-  //Modal
 
+  //Modal
   const modalTrigger = document.querySelectorAll('[data-modal]'),
         modal = document.querySelector('.modal');
-        // modalCloseBtn = document.querySelector('[data-close]');
 
   function openModal() {
     modal.classList.add('show');
@@ -118,8 +116,6 @@ window.addEventListener('DOMContentLoaded', () => {
     modal.classList.remove('show');
     document.body.style.overflow = '';
   }
-
-  // modalCloseBtn.addEventListener('click', closeModal);
 
   modal.addEventListener('click', (e) => {
     if (e.target === modal || e.target.getAttribute('data-close') == '') {
@@ -145,7 +141,6 @@ window.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', showModalByScroll);
 
   //Используем классы для карточек
-
   class MenuCard {
     constructor(src, alt, title, descr, price, parentSelector, ...classes) {
       this.src = src;
@@ -201,63 +196,9 @@ window.addEventListener('DOMContentLoaded', () => {
       new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
     });
   });
-  //ЭТО ВТОРОЙ ВАРИАНТ, ВМЕСТО КЛАССОВ
-  // getResource('http://localhost:3000/menu')
-  //   .then(data => createCard(data));
-  
-  // function createCard(data) {
-  //   data.forEach(({img, altimg, title, descr, price}) => {
-  //     const element = document.createElement('div');
-  //     price = price * 27;
-  //     element.classList.add('menu__item');
-  //     element.innerHTML = `
-  //       <img src=${img} alt=${altimg}>
-  //       <h3 class="menu__item-subtitle">${title}</h3>
-  //       <div class="menu__item-descr">${descr}</div>
-  //       <div class="menu__item-divider"></div>
-  //       <div class="menu__item-price">
-  //           <div class="menu__item-cost">Цена:</div>
-  //           <div class="menu__item-total"><span>${price}</span> грн/день</div>
-  //       </div>
-  //     `;
-  //     document.querySelector('.menu .container').append(element);
-  //   });
-  // }
 
-  // new MenuCard(
-  //   "img/tabs/vegy.jpg",
-  //   "vegy",
-  //   'Меню "Фитнес"',
-  //   'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
-  //   9,
-  //   '.menu .container',
-  //   // 'menu__item',
-  //   // 'big'
-  // ).render();
 
-  // new MenuCard(
-  //   "img/tabs/elite.jpg",
-  //   "elite",
-  //   'Меню “Премиум”',
-  //   'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-  //   14,
-  //   '.menu .container',
-  //   'menu__item'
-  // ).render();
-
-  // new MenuCard(
-  //   "img/tabs/post.jpg",
-  //   "post",
-  //   'Меню "Постное"',
-  //   'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
-  //   21,
-  //   '.menu .container',
-  //   'menu__item'
-  // ).render();
-  
-  
   // Forms
-
   const forms = document.querySelectorAll('form');
 
   const message = {
@@ -277,42 +218,17 @@ window.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
 
       const statusMessage = document.createElement('img');
-      // statusMessage.classList.add('status');
       statusMessage.src = message.loading;
-      // statusMessage.textContent = message.loading;
       statusMessage.style.cssText = `
         display: block;
         margin: 0 auto;
       `;
-      // form.append(statusMessage);
       form.insertAdjacentElement('afterend', statusMessage);
 
-      // const request = new XMLHttpRequest();
-      // request.open('POST', 'php/server.php'); 
-
-      // request.setRequestHeader('Content-type', 'application/json');
 
       const formData = new FormData(form);
- 
-      // const object = {};
-      // formData.forEach(function(value, key) {
-      //   object[key] = value;
-      // });
+
       const json = JSON.stringify(Object.fromEntries(formData.entries()));
-
-      // const object = {a: 23, b: 50};
-      // console.log(Object.entries(object));
-
-      // const json = JSON.stringify(object);
-
-      // request.send(json);
-      // fetch('php/server.php', {
-      //   method: "POST",
-      //   headers: {
-      //     'Content-type': 'application/json'
-      //   },
-      //   body: JSON.stringify(object)
-      // })
 
       const postData = async (url, data) => {
         const res = await fetch(url, {
@@ -343,30 +259,6 @@ window.addEventListener('DOMContentLoaded', () => {
         form.reset();
     });
 
-
-
-      // const getResource = async (url) => {
-      //   const res = await fetch(url);
-      //   if (!res.ok) {
-      //     throw new Error(`Could not fetch ${url}, status: ${res.status}`);
-      //   }
-      //   return await res.json();
-      // };
-
-      // request.addEventListener('load', () => {
-      //   if(request.status === 200) {
-      //     console.log(request.response);
-      //     // statusMessage.textContent = message.success;
-      //     showThanksModal(message.success);
-      //     form.reset();
-      //     // setTimeout(() => {
-      //       statusMessage.remove();
-      //     // }, 2000);
-      //   } else {
-      //     // statusMessage.textContent = message.failure;
-      //     showThanksModal(message.failure);
-      //   }
-      // });
     });
   }
 
@@ -393,30 +285,6 @@ window.addEventListener('DOMContentLoaded', () => {
       closeModal();
     }, 4000);
   }
-
-
-  //Fetch API
-// fetch();
-// fetch('https://jsonplaceholder.typicode.com/todos/1')
-//   .then(response => response.json())
-//   .then(json => console.log(json));
-
-
-// fetch('https://jsonplaceholder.typicode.com/posts', {
-//   method: 'POST',
-//   body: JSON.stringify({name: 'Alex'}),
-//   headers: {
-//     'Content-type': 'application/json'
-//   }
-// })
-// .then(response => response.json())
-// .then(json => console.log(json));
-
-
-//БД json-server
-// fetch('http://localhost:3000/menu')
-// .then(data => data.json())
-// .then(res => console.log(res));
 
 });
 
