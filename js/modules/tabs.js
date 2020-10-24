@@ -39,4 +39,4 @@ function tabs() {
   }); //end addEventListener click
 } //end function tabs
 
-module.exports = tabs;
+export default tabs;

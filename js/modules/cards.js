@@ -57,4 +57,4 @@ function cards() {
   }); //end then
 } //end function cards
 
-module.exports = cards;
+export default cards;

@@ -157,4 +157,4 @@ for(let i = 0; i < slides.length; i++){
   }); // end forEach
 } //end slider
 
-module.exports = slider;
+export default slider;
