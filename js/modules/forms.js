@@ -1,9 +1,10 @@
 import {openModal, closeModal} from './modal';
 
-function forms() {
+function forms(formSelector, modalTimerId) {
   // Forms
-  const forms = document.querySelectorAll('form');
+  const forms = document.querySelectorAll(formSelector);
 
+  //object message was here
   const message = {
     loading: 'img/form/spinner.svg',
     success: 'Спасибо! Скоро мы с вами свяжемся',
@@ -32,6 +33,7 @@ function forms() {
 
         const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
+//function postData was here
         const postData = async (url, data) => {
           const res = await fetch(url, {
             method: "POST",
@@ -40,7 +42,7 @@ function forms() {
               },
               body: data
           });
-          
+
           if (res.ok) {
             showThanksModal(message.success);
             return await res.json();
@@ -48,6 +50,7 @@ function forms() {
             showThanksModal(message.failure);
           }
         }; //end function postData
+
 
         postData('http://localhost:3000/requests', json)
         .then((data) => {
@@ -67,7 +70,7 @@ function forms() {
     const prevModalDialog = document.querySelector('.modal__dialog');
 
     prevModalDialog.classList.add('hide');
-    openModal();
+    openModal('.modal', modalTimerId);
 
     const thanksModal = document.createElement('div');
     thanksModal.classList.add('modal__dialog');
@@ -83,7 +86,7 @@ function forms() {
       thanksModal.remove(); //10:50
       prevModalDialog.classList.add('show');
       prevModalDialog.classList.remove('hide');
-      closeModal();
+      closeModal('.modal');
     }, 4000); //end setTimeout
   } //end function showThanksModal
 } //end function forms
