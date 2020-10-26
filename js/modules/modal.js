@@ -17,7 +17,10 @@ function closeModal(modalSelector) {
   modal.classList.add('hide');
   modal.classList.remove('show');
   document.body.style.overflow = '';
+  console.log('closeModal the end');
 } //end closeMadal
+
+
 
 
 function modal(triggerSelector, modalSelector, modalTimerId) {

@@ -1,20 +1,16 @@
 import {openModal, closeModal} from './modal';
+import {postData} from '../services/services';
+import {message} from '../services/services';
 
 function forms(formSelector, modalTimerId) {
   // Forms
   const forms = document.querySelectorAll(formSelector);
 
   //object message was here
-  const message = {
-    loading: 'img/form/spinner.svg',
-    success: 'Спасибо! Скоро мы с вами свяжемся',
-    failure: 'Что-то пошло не так...'
-  };
 
   forms.forEach(item => {
     bindPostData(item);
   });
-
 
   function bindPostData(form) {
       form.addEventListener('submit', (e) => {
@@ -34,25 +30,8 @@ function forms(formSelector, modalTimerId) {
         const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
 //function postData was here
-        const postData = async (url, data) => {
-          const res = await fetch(url, {
-            method: "POST",
-              headers: {
-                'Content-type': 'application/json'
-              },
-              body: data
-          });
 
-          if (res.ok) {
-            showThanksModal(message.success);
-            return await res.json();
-          } else {
-            showThanksModal(message.failure);
-          }
-        }; //end function postData
-
-
-        postData('http://localhost:3000/requests', json)
+        postData('http://localhost:3000/requests', json, showThanksModal)
         .then((data) => {
             console.log(data);
             statusMessage.remove(); //удаляем спиннэр
