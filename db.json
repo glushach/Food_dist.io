@@ -87,6 +87,46 @@
       "name": "Дмитрий",
       "phone": "0507465377",
       "id": 13
+    },
+    {
+      "name": "Firefox",
+      "phone": "0951085475",
+      "id": 14
+    },
+    {
+      "name": "Opera",
+      "phone": "0901025634",
+      "id": 15
+    },
+    {
+      "name": "Google Chrome",
+      "phone": "+7 (095) 108-75-67",
+      "id": 16
+    },
+    {
+      "name": "Internet Explorer",
+      "phone": "0891002564",
+      "id": 17
+    },
+    {
+      "name": "Mozilla Firefox",
+      "phone": "0709363215",
+      "id": 18
+    },
+    {
+      "name": "Internet Explorer",
+      "phone": "0928563254",
+      "id": 19
+    },
+    {
+      "name": "Opera",
+      "phone": "0901025634",
+      "id": 20
+    },
+    {
+      "name": "Google Chrome",
+      "phone": "+7 (095) 108-75-67",
+      "id": 21
     }
   ]
 }

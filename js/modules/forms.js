@@ -27,7 +27,12 @@ function forms(formSelector, modalTimerId) {
 
         const formData = new FormData(form);
 
-        const json = JSON.stringify(Object.fromEntries(formData.entries()));
+        // const json = JSON.stringify(Object.fromEntries(formData.entries()));
+
+        let obj = {};
+        formData.forEach((value, key) => { obj[key] = value;});
+        let json = JSON.stringify(obj);
+
 
 //function postData was here
 
